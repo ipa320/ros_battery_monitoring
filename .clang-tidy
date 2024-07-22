@@ -1,0 +1,54 @@
+Checks: >
+  *,
+  -abseil*,
+  -altera*,
+  -android*,
+  -fuchsia*,
+  -hicpp*,
+  -llvm*
+  -llvm_libc*,
+  -llvmlibc*,
+  -objc*,
+  -zircon*,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-non-private-member-variables-in-class
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-type-vararg,
+  -google-readability-todo,
+  -google-runtime-references,
+  -modernize-use-trailing-return-type,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-uppercase-literal-suffix,
+WarningsAsErrors: 'bugprone-use-after-move'
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle: 'file'
+CheckOptions:
+  # Needed to define safe do { stuff } while(0) macros
+  - key:             cppcoreguidelines-avoid-do-while
+    value:           'IgnoreMacros'
+  - key:             bugprone-assert-side-effect.AssertMacros
+    value:           'assert;ROS_ASSERT'
+  - key:             cppcoreguidelines-avoid-magic-numbers.IgnoredFloatingPointValues
+    value:           '0.5;1.0;100.0;2.0'
+  - key:             cppcoreguidelines-avoid-magic-numbers.IgnoredIntegerValues
+    value:           '1;2;3;4;'
+  - key:             cppcoreguidelines-macro-usage.AllowedRegexp
+    value:           '^DEBUG_*|IPA_LOGGING_CLASS_NAME'
+  - key:             cppcoreguidelines-macro-usage.CheckCapsOnly
+    value:           '0'
+  - key:             readability-magic-numbers.IgnoredFloatingPointValues
+    value:           '0.5;1.0;100.0;2.0'
+  - key:             readability-magic-numbers.IgnoredIntegerValues
+    value:           '1;2;3;4;'
+  - { key: readability-identifier-naming.NamespaceCase,       value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,           value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,          value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,        value: camelBack}
+  - { key: readability-identifier-naming.VariableCase,        value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberSuffix, value: _         }
+  - { key: readability-identifier-naming.GlobalConstantCase,  value: UPPER_CASE }
+  - { key: readability-identifier-naming.GlobalVariablePrefix,  value: g_ }
+  - { key: readability-function-cognitive-complexity.IgnoreMacros,  value: true }
+  - { key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic, value: true }
