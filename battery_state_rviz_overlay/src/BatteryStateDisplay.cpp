@@ -1,4 +1,4 @@
-#include "battery_state_display/BatteryStateDisplay.hpp"
+#include "battery_state_rviz_overlay/BatteryStateDisplay.hpp"
 #include <cmath>
 #include <fmt/compile.h>
 #include <fmt/format.h>
