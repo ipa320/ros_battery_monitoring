@@ -30,21 +30,21 @@ void BatteryStateDisplay::batteryStateCallback(const sensor_msgs::msg::BatterySt
   overlay.action = OverlayText::ADD;
   overlay.text = "<pre>";
 
-  overlay.width = 900;
+  overlay.width = 450;
   overlay.height = 10;
 
-  constexpr auto line_height = 60;
+  constexpr auto line_height = 25;
 
   overlay.text += fmt::format(FMT_COMPILE("Battery voltage: {:>8.2f}V\n"), message.voltage);
   overlay.height += line_height;
 
-  if (std::isnormal(message.current))
+  if (isNormal(message.current))
   {
     overlay.text += fmt::format(FMT_COMPILE("Current:       {:>8.2f}A\n"), message.current);
     overlay.height += line_height;
   }
 
-  if (std::isnormal(message.percentage))
+  if (isNormal(message.percentage))
   {
     overlay.text += fmt::format(FMT_COMPILE("Percent SOC:     {:>8.2f}%\n"), message.percentage);
     overlay.height += line_height;
@@ -55,7 +55,7 @@ void BatteryStateDisplay::batteryStateCallback(const sensor_msgs::msg::BatterySt
   overlay.horizontal_alignment = OverlayText::LEFT;
   overlay.vertical_alignment = OverlayText::TOP;
 
-  overlay.bg_color.set__a(0.8);
+  overlay.bg_color.a = 0.5;
 
   overlay.text_size = 20.0;
   overlay.font = "DejaVu Sans Mono";
