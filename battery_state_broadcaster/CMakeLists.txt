@@ -27,6 +27,35 @@ ament_target_dependencies(battery_state_broadcaster PUBLIC ${THIS_PACKAGE_INCLUD
 
 pluginlib_export_plugin_description_file(controller_interface battery_state_broadcaster.xml)
 
+if(BUILD_TESTING)
+  find_package(ament_cmake_gmock REQUIRED)
+  find_package(controller_manager REQUIRED)
+  find_package(hardware_interface REQUIRED)
+  find_package(ros2_control_test_assets REQUIRED)
+
+  ament_add_gmock(test_load_battery_state_broadcaster
+    test/test_load_battery_state_broadcaster.cpp)
+  target_include_directories(test_load_battery_state_broadcaster PRIVATE include)
+  target_link_libraries(test_load_battery_state_broadcaster
+    battery_state_broadcaster
+  )
+  ament_target_dependencies(test_load_battery_state_broadcaster
+    controller_manager
+    hardware_interface
+    ros2_control_test_assets
+  )
+
+  #[[ament_add_gmock(test_battery_state_broadcaster
+    test/test_battery_state_broadcaster.cpp)
+  target_include_directories(test_battery_state_broadcaster PRIVATE include)
+  target_link_libraries(test_battery_state_broadcaster
+    battery_state_broadcaster
+  )
+  ament_target_dependencies(test_battery_state_broadcaster
+    hardware_interface
+  )]]#
+endif()
+
 install(
   DIRECTORY include/
   DESTINATION include/battery_state_broadcaster
