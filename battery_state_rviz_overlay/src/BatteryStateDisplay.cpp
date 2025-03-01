@@ -7,6 +7,8 @@
 #include <rviz_2d_overlay_msgs/msg/overlay_text.hpp>
 #include <sensor_msgs/msg/battery_state.hpp>
 
+namespace battery_state_rviz_overlay
+{
 BatteryStateDisplay::BatteryStateDisplay(const std::string& name)
   : rclcpp::Node(name)
   , overlayPublisher_{ create_publisher<rviz_2d_overlay_msgs::msg::OverlayText>("battery_display_text",
@@ -30,10 +32,12 @@ void BatteryStateDisplay::batteryStateCallback(const sensor_msgs::msg::BatterySt
   overlay.action = OverlayText::ADD;
   overlay.text = "<pre>";
 
-  overlay.width = 450;
-  overlay.height = 10;
+  params_ = param_listener_->get_params();
 
-  constexpr auto line_height = 25;
+  overlay.width = params_.width;
+  overlay.height = params_.height;
+
+  auto line_height = params_.line_height;
 
   overlay.text += fmt::format(FMT_COMPILE("Battery voltage: {:>8.2f}V\n"), message.voltage);
   overlay.height += line_height;
@@ -50,19 +54,50 @@ void BatteryStateDisplay::batteryStateCallback(const sensor_msgs::msg::BatterySt
     overlay.height += line_height;
   }
 
-  overlay.horizontal_distance = 20;
-  overlay.vertical_distance = 20;
-  overlay.horizontal_alignment = OverlayText::LEFT;
-  overlay.vertical_alignment = OverlayText::TOP;
+  overlay.horizontal_distance = params_.horizontal_distance;
+  overlay.vertical_distance = params_.vertical_distance;
+  overlay.horizontal_alignment = params_.horizontal_alignment;
+  overlay.vertical_alignment = params_.vertical_alignment;
 
-  overlay.bg_color.a = 0.5;
+  overlay.bg_color.a = params_.bg_color_a;
 
-  overlay.text_size = 20.0;
-  overlay.font = "DejaVu Sans Mono";
-  overlay.fg_color.a = 1.0;
-  overlay.fg_color.r = 0;
-  overlay.fg_color.g = 0.576470588;
-  overlay.fg_color.b = 0.454901961;
+  overlay.text_size = params_.text_size;
+  overlay.font = params_.font;
+
+  try {
+    std::vector<double> rgba = getRgba();
+
+    overlay.fg_color.a = rgba[3];
+    overlay.fg_color.r = rgba[0];
+    overlay.fg_color.g = rgba[1];
+    overlay.fg_color.b = rgba[2];
+  
+  } catch (const std::exception & e) {
+
+    overlay.fg_color.a = 1.0;
+    overlay.fg_color.r = 0;
+    overlay.fg_color.g = 0.576470588;
+    overlay.fg_color.b = 0.454901961;
+  
+    RCLCPP_ERROR(
+      get_logger(), "Exception thrown while parsing RGBA parameter fg_color_rgba: %s\n%s \n",
+      params_.fg_color_rgba.c_str(),
+      e.what());
+  }
 
   overlayPublisher_->publish(overlay);
 }
+
+std::vector<double> BatteryStateDisplay::getRgba()
+{
+  //const std::string s_rgba = params_.fg_color_rgba;
+  std::stringstream ss(params_.fg_color_rgba);
+  std::vector<double> double_array;
+  std::string value;
+
+  while (std::getline(ss, value, ' ')) {
+    double_array.push_back(std::stod(value));
+  }
+  return double_array;
+}
+}  // namespace battery_state_rviz_overlay

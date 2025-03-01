@@ -1,0 +1,50 @@
+battery_state_rviz_overlay:
+
+  # See https://github.com/teamspatzenhirn/rviz_2d_overlay_plugins/blob/main/rviz_2d_overlay_msgs/msg/OverlayText.msg
+
+  # the following parameters can be defined in a launch file:
+  width:
+    type: int
+    description: "Width in pixels of the overlay"
+    default_value: 450
+  height:
+    type: int
+    description: "Height in pixels of the overlay"
+    default_value: 10
+  line_height:
+    type: int
+    description: "Line Height in pixels of the overlay"
+    default_value: 25
+  horizontal_distance:
+    type: int
+    description: "Position: Horizontal distance from left/right border or center, depending on alignment"
+    default_value: 20
+  vertical_distance:
+    type: int
+    description: "Position: Vertical distance between from top/bottom border or center, depending on alignment"
+    default_value: 20
+  font:
+    type: string
+    description: "Font"
+    default_value: "DejaVu Sans Mono"
+  text_size:
+    type: double
+    description: "Font size"
+    default_value: 20.0
+  horizontal_alignment:
+    type: int
+    description: "Horizontal alignment, one of LEFT=0, CENTER=2, RIGHT=1"
+    default_value: 0
+  vertical_alignment:
+    type: int
+    description: "Vertical alignment, one of TOP=3, BOTTOM=4"
+    default_value: 3
+  bg_color_a:
+    type: double
+    description: "Background transparency"
+    default_value: 0.5
+  fg_color_rgba:
+    type: string
+    description: "R,G,B and A of the font color"
+    default_value: "0 0.576470588 0.454901961 1.0"
+

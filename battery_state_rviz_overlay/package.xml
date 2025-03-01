@@ -13,6 +13,7 @@
   <depend>sensor_msgs</depend>
   <depend>rclcpp</depend>
   <depend>rviz_2d_overlay_msgs</depend>
+  <depend>generate_parameter_library</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
