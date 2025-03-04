@@ -14,15 +14,23 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(generate_parameter_library REQUIRED)
+
 foreach(dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
   find_package(${dependency} REQUIRED)
 endforeach()
+
+# Parameters Library ================================================
+set(TARGET ${PROJECT_NAME}_parameters)
+generate_parameter_library(${TARGET} src/battery_state_broadcaster_parameters.yaml)
 
 add_library(battery_state_broadcaster SHARED src/BatteryStateBroadcaster.cpp)
 target_include_directories(battery_state_broadcaster PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include/battery_state_broadcaster>
 )
+
+target_link_libraries(${PROJECT_NAME} PUBLIC battery_state_broadcaster_parameters)
 ament_target_dependencies(battery_state_broadcaster PUBLIC ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 pluginlib_export_plugin_description_file(controller_interface battery_state_broadcaster.xml)
@@ -33,6 +41,7 @@ install(
 )
 install(
   TARGETS
+  battery_state_broadcaster_parameters
   battery_state_broadcaster
   EXPORT export_battery_state_broadcaster
   RUNTIME DESTINATION bin
