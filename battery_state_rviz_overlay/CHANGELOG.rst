@@ -2,6 +2,9 @@
 Changelog for package battery_state_rviz_overlay
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.2 (2025-06-01)
 ------------------
 * Replace ament_target_dependencies with target_link_libraries ([#6](https://github.com/ipa320/ros_battery_monitoring/issues/6))
