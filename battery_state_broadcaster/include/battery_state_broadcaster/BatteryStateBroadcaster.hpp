@@ -2,7 +2,7 @@
 
 #include <controller_interface/controller_interface.hpp>
 #include <rclcpp/publisher.hpp>
-#include <realtime_tools/realtime_publisher.h>
+#include <realtime_tools/realtime_publisher.hpp>
 #include <sensor_msgs/msg/battery_state.hpp>
 
 #include "BatterySensor.hpp"
@@ -12,9 +12,9 @@ namespace battery_state_broadcaster
 class BatteryStateBroadcaster : public controller_interface::ControllerInterface
 {
 public:
-  [[nodiscard]] controller_interface::InterfaceConfiguration command_interface_configuration() const override;
+  controller_interface::InterfaceConfiguration command_interface_configuration() const override;
 
-  [[nodiscard]] controller_interface::InterfaceConfiguration state_interface_configuration() const override;
+  controller_interface::InterfaceConfiguration state_interface_configuration() const override;
 
   controller_interface::CallbackReturn on_init() override;
 
