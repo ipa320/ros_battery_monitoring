@@ -46,7 +46,7 @@ void BatteryStateDisplay::batteryStateCallback(const sensor_msgs::msg::BatterySt
 
   if (isNormal(message.percentage))
   {
-    overlay.text += fmt::format(FMT_COMPILE("Percent SOC:     {:>8.2f}%\n"), message.percentage);
+    overlay.text += fmt::format(FMT_COMPILE("Percent SOC:     {:>8.2f}%\n"), 100 * message.percentage);
     overlay.height += line_height;
   }
 
