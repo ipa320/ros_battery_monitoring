@@ -2,6 +2,12 @@
 Changelog for package battery_state_broadcaster
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
+* Fix compile error with latest realtime_tools `#12 <https://github.com/ipa320/ros_battery_monitoring/issues/12>`_
+* Contributors: Jonas Otto, Michal Sojka
+
 1.1.0 (2025-09-26)
 ------------------
 * address deprecations in ros2_control for kilted
