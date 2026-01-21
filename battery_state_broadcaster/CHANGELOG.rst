@@ -2,8 +2,8 @@
 Changelog for package battery_state_broadcaster
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2026-01-21)
+------------------
 
 * Fix compile error with latest realtime_tools `#12 <https://github.com/ipa320/ros_battery_monitoring/issues/12>`_
 * Contributors: Jonas Otto, Michal Sojka

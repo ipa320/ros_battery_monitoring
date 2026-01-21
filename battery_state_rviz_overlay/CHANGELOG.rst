@@ -2,8 +2,8 @@
 Changelog for package battery_state_rviz_overlay
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.0 (2026-01-21)
+------------------
 * Fix battery percentage scale `#11 <https://github.com/ipa320/ros_battery_monitoring/issues/11>`_
 * Contributors: Jonas Otto, Ramon Wijnands
 
