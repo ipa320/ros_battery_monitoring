@@ -7,9 +7,25 @@ namespace battery_state_broadcaster
 {
 controller_interface::CallbackReturn BatteryStateBroadcaster::on_init()
 {
-  get_node()->declare_parameter("sensor_name", "battery_state");
-  get_node()->declare_parameter("power_supply_technology", -1);
-  get_node()->declare_parameter("design_capacity", 0.0);
+  try {
+    auto node = get_node();
+
+    if(!node->has_parameter("sensor_name")){
+      node->declare_parameter("sensor_name", "battery_state");
+    }
+    if(!node->has_parameter("power_supply_technology")){
+      node->declare_parameter("power_supply_technology", -1);
+    }
+    if(!node->has_parameter("design_capacity")){
+      node->declare_parameter("design_capacity", 0.0);
+    }
+  }
+  catch (const std::exception & e)
+  {
+    RCLCPP_ERROR(get_node()->get_logger(), "Parameter declaration failed: %s", e.what());
+    return controller_interface::CallbackReturn::ERROR;
+  }
+
   return CallbackReturn::SUCCESS;
 }
 
@@ -51,7 +67,7 @@ BatteryStateBroadcaster::on_configure(const rclcpp_lifecycle::State& /*previous_
   return CallbackReturn::SUCCESS;
 }
 
-[[nodiscard]] controller_interface::InterfaceConfiguration
+controller_interface::InterfaceConfiguration
 BatteryStateBroadcaster::command_interface_configuration() const
 {
   controller_interface::InterfaceConfiguration command_interfaces_config;
@@ -59,7 +75,7 @@ BatteryStateBroadcaster::command_interface_configuration() const
   return command_interfaces_config;
 }
 
-[[nodiscard]] controller_interface::InterfaceConfiguration BatteryStateBroadcaster::state_interface_configuration() const
+controller_interface::InterfaceConfiguration BatteryStateBroadcaster::state_interface_configuration() const
 {
   controller_interface::InterfaceConfiguration state_interfaces_config;
   state_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
